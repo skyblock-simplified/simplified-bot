@@ -48,7 +48,7 @@ dependencies {
     implementation("com.github.simplified-dev:scheduler:master-SNAPSHOT")
 
     // Split minecraft-api modules
-    implementation("com.github.skyblock-simplified:skyblock-data-api:master-SNAPSHOT")
+    implementation("com.github.simplified-api:skyblock-data:master-SNAPSHOT")
     implementation("com.github.simplified-api:mojang:master-SNAPSHOT")
     implementation("com.github.skyblock-simplified:sbs-api:master-SNAPSHOT")
     implementation("com.github.simplified-api:hypixel:master-SNAPSHOT")
