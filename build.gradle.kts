@@ -41,9 +41,21 @@ dependencies {
     // Hazelcast client for the Phase 6c WriteDispatcher SDK
     implementation(libs.hazelcast)
 
+    // Simplified infrastructure (formerly transitive via minecraft-api)
+    implementation("com.github.simplified-dev:client:master-SNAPSHOT")
+    implementation("com.github.simplified-dev:gson-extras:master-SNAPSHOT")
+    implementation("com.github.simplified-dev:manager:master-SNAPSHOT")
+    implementation("com.github.simplified-dev:scheduler:master-SNAPSHOT")
+
+    // Split minecraft-api modules
+    implementation("com.github.skyblock-simplified:skyblock-data-api:master-SNAPSHOT")
+    implementation("com.github.simplified-api:mojang:master-SNAPSHOT")
+    implementation("com.github.skyblock-simplified:sbs-api:master-SNAPSHOT")
+    implementation("com.github.simplified-api:hypixel:master-SNAPSHOT")
+
     // Projects
-    implementation("dev.sbs:minecraft-api:0.1.0")
-    implementation("dev.sbs:discord-api:0.1.0")
+    implementation("com.github.minecraft-library:asset-renderer:master-SNAPSHOT")
+    implementation("com.github.simplified-dev:discord4j-framework:master-SNAPSHOT")
 }
 
 tasks {
