@@ -1,11 +1,12 @@
 package dev.sbs.simplifiedbot;
 
-import dev.simplified.discordapi.DiscordBot;
-import dev.simplified.discordapi.command.DiscordCommand;
-import dev.simplified.discordapi.handler.DiscordConfig;
-import dev.sbs.skyblockdata.SkyBlockData;
-import api.simplified.hypixel.HypixelContract;
-import dev.sbs.simplifiedapi.response.SkyBlockEmojiData;
+import dev.sbs.discordapi.DiscordBot;
+import dev.sbs.discordapi.command.DiscordCommand;
+import dev.sbs.discordapi.handler.DiscordConfig;
+import dev.sbs.minecraftapi.MinecraftApi;
+import dev.sbs.minecraftapi.client.hypixel.request.HypixelContract;
+import dev.sbs.minecraftapi.client.sbs.request.SbsContract;
+import dev.sbs.minecraftapi.client.sbs.response.SkyBlockEmojiData;
 import dev.sbs.simplifiedbot.processor.resource.ResourceCollectionsProcessor;
 import dev.sbs.simplifiedbot.processor.resource.ResourceItemsProcessor;
 import dev.sbs.simplifiedbot.processor.resource.ResourceSkillsProcessor;
@@ -30,7 +31,7 @@ import java.util.concurrent.TimeUnit;
 @Log4j2
 public final class SimplifiedBot extends DiscordBot {
 
-    private static final HypixelContract HYPIXEL_RESOURCE_REQUEST = BotApi.getHypixelClient().getContract();
+    private static final HypixelContract HYPIXEL_RESOURCE_REQUEST = MinecraftApi.getClient(HypixelContract.class).getContract();
     private ItemCache itemCache;
     private SkyBlockEmojiData skyBlockEmojis;
 
@@ -39,8 +40,9 @@ public final class SimplifiedBot extends DiscordBot {
     }
 
     public static void main(final String[] args) {
-        // Connect the SkyBlock H2 session before commands fire.
-        SkyBlockData.connect(BotApi.getGsonSettings());
+        // Connect the SkyBlock H2 session before commands fire - the static initializer
+        // no longer auto-connects (see MinecraftApi.connectSkyBlockSession Javadoc).
+        MinecraftApi.connectSkyBlockSession();
 
         DiscordConfig discordConfig = DiscordConfig.builder()
             .withToken(SystemUtil.getEnv("DISCORD_TOKEN"))
@@ -70,11 +72,11 @@ public final class SimplifiedBot extends DiscordBot {
      * {@link GatewayConnectListener} once the gateway is online.
      */
     void bootstrap() {
-        BotApi.getKeyManager().add(SystemUtil.getEnvPair("HYPIXEL_API_KEY"));
+        MinecraftApi.getKeyManager().add(SystemUtil.getEnvPair("HYPIXEL_API_KEY"));
 
         // Update Caches
         log.info("Building Caches");
-        this.skyBlockEmojis = BotApi.getSbsClient().getContract().getItemEmojis();
+        this.skyBlockEmojis = MinecraftApi.getClient(SbsContract.class).getContract().getItemEmojis();
         this.itemCache = new ItemCache();
         this.getItemCache().getAuctionHouse().update();
         this.getItemCache().getBazaar().update();
@@ -82,7 +84,7 @@ public final class SimplifiedBot extends DiscordBot {
 
         // Schedule SkyBlock Emoji Cache Updates
         this.getScheduler().scheduleAsync(
-            () -> this.skyBlockEmojis = BotApi.getSbsClient().getContract().getItemEmojis(),
+            () -> this.skyBlockEmojis = MinecraftApi.getClient(SbsContract.class).getContract().getItemEmojis(),
             10,
             10,
             TimeUnit.MINUTES

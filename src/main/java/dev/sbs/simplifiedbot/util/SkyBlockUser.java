@@ -1,22 +1,21 @@
 package dev.sbs.simplifiedbot.util;
 
-import dev.simplified.discordapi.command.exception.InputException;
-import dev.simplified.discordapi.command.parameter.Argument;
-import dev.simplified.discordapi.context.command.SlashCommandContext;
-import dev.simplified.discordapi.exception.DiscordUserException;
-import dev.sbs.simplifiedbot.BotApi;
-import dev.sbs.skyblockdata.SkyBlockData;
-import api.simplified.hypixel.HypixelContract;
-import api.simplified.hypixel.response.hypixel.HypixelGuild;
-import api.simplified.hypixel.response.hypixel.HypixelStatus;
-import api.simplified.hypixel.response.skyblock.SkyBlockAuction;
-import api.simplified.hypixel.response.skyblock.SkyBlockIsland;
-import api.simplified.hypixel.response.skyblock.SkyBlockMember;
-import api.simplified.hypixel.response.skyblock.SkyBlockProfiles;
-import api.simplified.mojang.response.MojangProfile;
-import dev.sbs.simplifiedapi.SimplifiedContract;
-import dev.sbs.simplifiedapi.response.SkyBlockEmojiData;
-import dev.sbs.skyblockdata.common.Profile;
+import dev.sbs.discordapi.command.exception.InputException;
+import dev.sbs.discordapi.command.parameter.Argument;
+import dev.sbs.discordapi.context.command.SlashCommandContext;
+import dev.sbs.discordapi.exception.DiscordUserException;
+import dev.sbs.minecraftapi.MinecraftApi;
+import dev.sbs.minecraftapi.client.hypixel.request.HypixelContract;
+import dev.sbs.minecraftapi.client.hypixel.response.hypixel.HypixelGuild;
+import dev.sbs.minecraftapi.client.hypixel.response.hypixel.HypixelStatus;
+import dev.sbs.minecraftapi.client.hypixel.response.skyblock.SkyBlockAuction;
+import dev.sbs.minecraftapi.client.hypixel.response.skyblock.SkyBlockIsland;
+import dev.sbs.minecraftapi.client.hypixel.response.skyblock.SkyBlockMember;
+import dev.sbs.minecraftapi.client.hypixel.response.skyblock.SkyBlockProfiles;
+import dev.sbs.minecraftapi.client.mojang.response.MojangProfile;
+import dev.sbs.minecraftapi.client.sbs.request.SbsContract;
+import dev.sbs.minecraftapi.client.sbs.response.SkyBlockEmojiData;
+import dev.sbs.minecraftapi.skyblock.common.Profile;
 import dev.sbs.simplifiedbot.SimplifiedBot;
 import dev.sbs.simplifiedbot.command.exception.UnlinkedAccountException;
 import dev.sbs.simplifiedbot.persistence.model.AppUser;
@@ -52,15 +51,15 @@ public final class SkyBlockUser {
             if (!this.isVerified(commandContext.getInteractUserId()))
                 throw new UnlinkedAccountException();
 
-            optionalPlayerID = SkyBlockData.getRepository(AppUser.class)
+            optionalPlayerID = MinecraftApi.getRepository(AppUser.class)
                 .matchFirst(userModel -> userModel.getDiscordIds().contains(commandContext.getInteractUserId().asLong()))
                 .map(userModel -> userModel.getMojangUniqueIds().getLast())
                 .map(UUID::toString);
         }
 
         String playerID = optionalPlayerID.orElseThrow(); // Will never reach here
-        SimplifiedContract sbs = BotApi.getSbsClient().getContract();
-        HypixelContract hypixel = BotApi.getHypixelClient().getContract();
+        SbsContract sbs = MinecraftApi.getClient(SbsContract.class).getContract();
+        HypixelContract hypixel = MinecraftApi.getClient(HypixelContract.class).getContract();
         this.mojangProfile = StringUtil.isUUID(playerID) ? sbs.getProfileFromUniqueId(StringUtil.toUUID(playerID)) : sbs.getProfileFromUsername(playerID);
         this.profiles = hypixel.getProfiles(this.getMojangProfile().getUniqueId());
         this.guild = hypixel.getGuildByPlayer(this.getMojangProfile().getUniqueId()).getGuild();
@@ -106,7 +105,7 @@ public final class SkyBlockUser {
     }
 
     public boolean isVerified(@NotNull Snowflake userId) {
-        return SkyBlockData.getRepository(AppUser.class).matchFirst(userModel -> userModel.getDiscordIds().contains(userId.asLong())).isPresent();
+        return MinecraftApi.getRepository(AppUser.class).matchFirst(userModel -> userModel.getDiscordIds().contains(userId.asLong())).isPresent();
     }
 
     public void setSelectedIsland(@NotNull Profile profile) {

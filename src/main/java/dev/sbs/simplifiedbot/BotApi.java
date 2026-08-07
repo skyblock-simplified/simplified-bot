@@ -1,10 +1,10 @@
 package dev.sbs.simplifiedbot;
 
-import api.simplified.hypixel.HypixelContract;
-import api.simplified.hypixel.exception.HypixelApiException;
 import com.google.gson.Gson;
-import dev.sbs.simplifiedapi.SimplifiedContract;
-import dev.sbs.simplifiedapi.exception.SimplifiedApiException;
+import dev.sbs.hypixelapi.HypixelContract;
+import dev.sbs.hypixelapi.exception.HypixelApiException;
+import dev.sbs.sbsapi.SbsContract;
+import dev.sbs.sbsapi.exception.SbsApiException;
 import dev.sbs.simplifiedbot.write.WriteDispatcher;
 import dev.simplified.client.Client;
 import dev.simplified.client.ClientConfig;
@@ -40,15 +40,15 @@ public final class BotApi {
     @Getter private static final @NotNull Scheduler scheduler = new Scheduler();
 
     @Getter private static final @NotNull Client<HypixelContract> hypixelClient = Client.create(
-        ClientConfig.builder(HypixelContract.class, gsonSettings)
+        ClientConfig.builder(HypixelContract.class, gson)
             .withErrorDecoder(HypixelApiException::new)
             .withDynamicHeader("API-Key", keyManager.getSupplier("HYPIXEL_API_KEY"))
             .build()
     );
 
-    @Getter private static final @NotNull Client<SimplifiedContract> sbsClient = Client.create(
-        ClientConfig.builder(SimplifiedContract.class, gsonSettings)
-            .withErrorDecoder(SimplifiedApiException::new)
+    @Getter private static final @NotNull Client<SbsContract> sbsClient = Client.create(
+        ClientConfig.builder(SbsContract.class, gson)
+            .withErrorDecoder(SbsApiException::new)
             .build()
     );
 
