@@ -42,13 +42,13 @@ dependencies {
     implementation(libs.hazelcast)
 
     // Simplified infrastructure (formerly transitive via minecraft-api)
-    implementation("com.github.simplified-dev:client:master-SNAPSHOT")
-    implementation("com.github.simplified-dev:gson-extras:master-SNAPSHOT")
+    implementation("com.github.simplified-dev:client") { version { strictly("3d87a03") } }
+    implementation("com.github.simplified-dev:gson-extras") { version { strictly("2ba8143") } }
     implementation("com.github.simplified-dev:manager:master-SNAPSHOT")
-    implementation("com.github.simplified-dev:scheduler:master-SNAPSHOT")
+    implementation("com.github.simplified-dev:scheduler") { version { strictly("abfe0e3") } }
 
     // Split minecraft-api modules
-    implementation("com.github.simplified-api:skyblock-data:master-SNAPSHOT")
+    implementation("com.github.simplified-api:skyblock:master-SNAPSHOT")
     implementation("com.github.simplified-api:mojang:master-SNAPSHOT")
     implementation("com.github.skyblock-simplified:sbs-api:master-SNAPSHOT")
     implementation("com.github.simplified-api:hypixel:master-SNAPSHOT")
