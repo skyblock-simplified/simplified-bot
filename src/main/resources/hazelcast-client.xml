@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-  Hazelcast client configuration for the simplified-bot Phase 6c WriteDispatcher
+  Hazelcast client configuration for the bot Phase 6c WriteDispatcher
   SDK. This file is loaded from the classpath on the first call to
   HazelcastClient.newHazelcastClient() inside WriteDispatcher.createClient().
 
   IMPORTANT: this file MUST stay in sync with the canonical copy at
   infra/hazelcast/hazelcast-client.xml and with the sibling copy at
-  simplified-data/src/main/resources/hazelcast-client.xml. Any edit to one
+  data/src/main/resources/hazelcast-client.xml. Any edit to one
   MUST be applied to all three. A future phase should consolidate to a
   shared resource (gradle resources copy task or symlink).
 
@@ -17,8 +17,8 @@
   exists and matches the cluster.
 
   The address `hazelcast:5701` resolves via docker-internal DNS when
-  simplified-bot runs as a container on `skyblock-hazelcast-net`. Operators
-  running simplified-bot on the developer host MUST override this via the
+  bot runs as a container on `skyblock-hazelcast-net`. Operators
+  running bot on the developer host MUST override this via the
   `hazelcast.client.config` system property pointing at a different XML file,
   because port 5701 is expose-only on the cluster and not published to the
   host per the locked security decision in architecture_simplified_data_initiative.md.

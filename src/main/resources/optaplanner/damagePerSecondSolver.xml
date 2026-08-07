@@ -1,9 +1,9 @@
 <solver xmlns="https://www.optaplanner.org/xsd/solver">
     <moveThreadCount>AUTO</moveThreadCount>
-    <solutionClass>dev.sbs.simplifiedbot.optimizer.modules.damage_per_second.DamagePerSecondSolution</solutionClass>
-    <entityClass>dev.sbs.simplifiedbot.optimizer.modules.damage_per_second.DamagePerSecondItemEntity</entityClass>
+    <solutionClass>dev.sbs.bot.optimizer.modules.damage_per_second.DamagePerSecondSolution</solutionClass>
+    <entityClass>dev.sbs.bot.optimizer.modules.damage_per_second.DamagePerSecondItemEntity</entityClass>
     <scoreDirectorFactory>
-        <easyScoreCalculatorClass>dev.sbs.simplifiedbot.optimizer.modules.damage_per_second.DamagePerSecondCalculator</easyScoreCalculatorClass>
+        <easyScoreCalculatorClass>dev.sbs.bot.optimizer.modules.damage_per_second.DamagePerSecondCalculator</easyScoreCalculatorClass>
     </scoreDirectorFactory>
     <termination>
         <secondsSpentLimit>5</secondsSpentLimit>

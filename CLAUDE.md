@@ -8,19 +8,19 @@ See the root [`CLAUDE.md`](../CLAUDE.md) for multi-module build commands, enviro
 
 ```bash
 # From repo root
-./gradlew :simplified-bot:build          # Build (includes shadowJar)
-./gradlew :simplified-bot:test           # Run all tests
-./gradlew :simplified-bot:test --tests "dev.sbs.simplifiedbot.optimizer.OptimizerTest"  # Single test class
+./gradlew :bot:build          # Build (includes shadowJar)
+./gradlew :bot:test           # Run all tests
+./gradlew :bot:test --tests "dev.sbs.bot.optimizer.OptimizerTest"  # Single test class
 
 # Fat JAR (shadowJar merged into build task)
-./gradlew :simplified-bot:shadowJar      # Output: build/libs/simplified-bot-0.1.0.jar
+./gradlew :bot:shadowJar      # Output: build/libs/bot-0.1.0.jar
 ```
 
 Tests require a live MariaDB database and valid `HYPIXEL_API_KEY` - they are integration tests that hit real APIs. A `TestLifecycleListener` (JUnit platform listener) manages `MinecraftApi` startup/shutdown so the test JVM exits cleanly.
 
 ## Module Overview
 
-`simplified-bot` is the Discord bot application. It depends on `discord-api` and `minecraft-api` via Maven coordinates (not project references). All shared infrastructure (Gson, Scheduler, SessionManager, repositories) is reached through `MinecraftApi`.
+`bot` is the Discord bot application. It depends on `discord-api` and `minecraft-api` via Maven coordinates (not project references). All shared infrastructure (Gson, Scheduler, SessionManager, repositories) is reached through `MinecraftApi`.
 
 ### Entry Points
 
