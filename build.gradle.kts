@@ -50,7 +50,7 @@ dependencies {
     // Split minecraft-api modules
     implementation("com.github.simplified-api:skyblock:master-SNAPSHOT")
     implementation("com.github.simplified-api:mojang:master-SNAPSHOT")
-    implementation("com.github.skyblock-simplified:sbs-api:master-SNAPSHOT")
+    implementation("com.github.skyblock-simplified:simplified-api:master-SNAPSHOT")
     implementation("com.github.simplified-api:hypixel:master-SNAPSHOT")
 
     // Projects

@@ -5,7 +5,7 @@ import dev.sbs.discordapi.command.DiscordCommand;
 import dev.sbs.discordapi.handler.DiscordConfig;
 import dev.sbs.minecraftapi.MinecraftApi;
 import dev.sbs.minecraftapi.client.hypixel.request.HypixelContract;
-import dev.sbs.minecraftapi.client.sbs.request.SbsContract;
+import dev.sbs.minecraftapi.client.sbs.request.SimplifiedContract;
 import dev.sbs.minecraftapi.client.sbs.response.SkyBlockEmojiData;
 import dev.sbs.simplifiedbot.processor.resource.ResourceCollectionsProcessor;
 import dev.sbs.simplifiedbot.processor.resource.ResourceItemsProcessor;
@@ -76,7 +76,7 @@ public final class SimplifiedBot extends DiscordBot {
 
         // Update Caches
         log.info("Building Caches");
-        this.skyBlockEmojis = MinecraftApi.getClient(SbsContract.class).getContract().getItemEmojis();
+        this.skyBlockEmojis = MinecraftApi.getClient(SimplifiedContract.class).getContract().getItemEmojis();
         this.itemCache = new ItemCache();
         this.getItemCache().getAuctionHouse().update();
         this.getItemCache().getBazaar().update();
@@ -84,7 +84,7 @@ public final class SimplifiedBot extends DiscordBot {
 
         // Schedule SkyBlock Emoji Cache Updates
         this.getScheduler().scheduleAsync(
-            () -> this.skyBlockEmojis = MinecraftApi.getClient(SbsContract.class).getContract().getItemEmojis(),
+            () -> this.skyBlockEmojis = MinecraftApi.getClient(SimplifiedContract.class).getContract().getItemEmojis(),
             10,
             10,
             TimeUnit.MINUTES

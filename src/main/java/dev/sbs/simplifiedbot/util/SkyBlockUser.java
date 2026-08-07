@@ -13,7 +13,7 @@ import dev.sbs.minecraftapi.client.hypixel.response.skyblock.SkyBlockIsland;
 import dev.sbs.minecraftapi.client.hypixel.response.skyblock.SkyBlockMember;
 import dev.sbs.minecraftapi.client.hypixel.response.skyblock.SkyBlockProfiles;
 import dev.sbs.minecraftapi.client.mojang.response.MojangProfile;
-import dev.sbs.minecraftapi.client.sbs.request.SbsContract;
+import dev.sbs.minecraftapi.client.sbs.request.SimplifiedContract;
 import dev.sbs.minecraftapi.client.sbs.response.SkyBlockEmojiData;
 import dev.sbs.minecraftapi.skyblock.common.Profile;
 import dev.sbs.simplifiedbot.SimplifiedBot;
@@ -58,7 +58,7 @@ public final class SkyBlockUser {
         }
 
         String playerID = optionalPlayerID.orElseThrow(); // Will never reach here
-        SbsContract sbs = MinecraftApi.getClient(SbsContract.class).getContract();
+        SimplifiedContract sbs = MinecraftApi.getClient(SimplifiedContract.class).getContract();
         HypixelContract hypixel = MinecraftApi.getClient(HypixelContract.class).getContract();
         this.mojangProfile = StringUtil.isUUID(playerID) ? sbs.getProfileFromUniqueId(StringUtil.toUUID(playerID)) : sbs.getProfileFromUsername(playerID);
         this.profiles = hypixel.getProfiles(this.getMojangProfile().getUniqueId());
