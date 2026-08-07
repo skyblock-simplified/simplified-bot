@@ -48,10 +48,10 @@ dependencies {
     implementation("com.github.simplified-dev:scheduler") { version { strictly("abfe0e3") } }
 
     // Split minecraft-api modules
-    implementation("com.github.api:skyblock:master-SNAPSHOT")
-    implementation("com.github.api:mojang:master-SNAPSHOT")
+    implementation("com.github.simplified-api:skyblock:master-SNAPSHOT")
+    implementation("com.github.simplified-api:mojang:master-SNAPSHOT")
     implementation("com.github.skyblock-simplified:api:master-SNAPSHOT")
-    implementation("com.github.api:hypixel:master-SNAPSHOT")
+    implementation("com.github.simplified-api:hypixel:master-SNAPSHOT")
 
     // Projects
     implementation("com.github.minecraft-library:asset-renderer:master-SNAPSHOT")
